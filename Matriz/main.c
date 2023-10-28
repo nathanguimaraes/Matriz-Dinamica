@@ -1,47 +1,36 @@
 #include <stdio.h>
-#include "Matriz.h"
+#include "matriz.h"
 
+//Alunos: Nathan Guimarães e Natal Machado
 int main() {
-    int n, m;
-    printf("Digite o número de linhas e colunas da matriz: ");
-    scanf("%d %d", &n, &m);
+    int linhas = 3;
+    int colunas = 3;
+    Matrix *matriz = criarMatriz(linhas, colunas);
 
-    Matriz *mat = criarMatriz(n, m);
+    inserirDadosNaMatriz(matriz);
 
-    // Inserir valores na matriz
-    inserirValor(mat, 1, 1, 10.5);
-
-    inserirValor(mat, 0, 1, 50.5);
-    inserirValor(mat, 1, 0, 50.5);
-    inserirValor(mat, 2, 1, 50.5);
-    inserirValor(mat, 1, 2, 50.5);
-
-
-    // Consultar valores na matriz
-    double *valor = obterValor(mat, 1, 1);
-    if (valor != NULL) {
-        printf("Valor na posição (1, 1): %.2lf\n", *valor);
+    /*inserirValor(matriz, 0, 0, 1);
+    inserirValor(matriz, 1, 1, 2);
+    inserirValor(matriz, 2, 2, 3);
+*/
+    No *no = consultarPosicao(matriz, 1, 1);
+    if (no != NULL) {
+        printf("Valor na posição (1, 1): %d\n", no->vlr);
     } else {
-        printf("Posição inválida.\n");
+        printf("Posição inválida na matriz.\n");
     }
 
-    // Buscar valor na matriz
-    double valorPesquisado = 20.3;
-    double *result = pesquisarValor(mat, valorPesquisado);
-    if (result != NULL) {
-        printf("Valor %.2lf encontrado na posição (%d, %d)\n", valorPesquisado,
-               (int)(result - &mat->no[0][0]) / mat->colunas,
-               (int)(result - &mat->no[0][0]) % mat->colunas);
+    no = buscarValor(matriz, 2);
+    if (no != NULL) {
+        printf("Valor 2 encontrado na posição (%d, %d)\n", no->vlr, no->vlr);
     } else {
-        printf("Valor %.2lf não encontrado na matriz.\n", valorPesquisado);
+        printf("Valor não encontrado na matriz.\n");
     }
 
-    // Imprimir vizinhos
-    printf("Vizinhos da posição (1, 1):\n");
-    obterVizinhos(mat, 1, 1);
+    printf("Vizinhos de (1, 1):\n");
+    imprimirVizinhos(matriz, 1, 1);
 
-    // Desalocar a matriz
-    liberando(mat);
+    desalocarMatriz(matriz);
 
     return 0;
 }

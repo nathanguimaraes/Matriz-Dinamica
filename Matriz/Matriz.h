@@ -1,18 +1,23 @@
-
 #ifndef MATRIZ_H
 #define MATRIZ_H
 
+typedef struct No {
+    int vlr;
+    struct No *direita;
+    struct No *abaixo;
+} No;
+
 typedef struct {
-    double **no;
-    int linhas;
-    int colunas;
-} Matriz;
+    int lin;
+    int col;
+    No *inicio;
+} Matrix;
 
-Matriz* criarMatriz(int rows, int colunas);
-void liberando(Matriz *matriz);
-int inserirValor(Matriz *matriz, int linhas, int colunas, double valor);
-double* obterValor(Matriz *matriz, int linhas, int colunas);
-double* pesquisarValor(Matriz *matriz, double valor);
-void obterVizinhos(Matriz *matriz, int linhas, int colunas);
+Matrix* criarMatriz(int linhas, int colunas);
+void desalocarMatriz(Matrix *matriz);
+int inserirValor(Matrix *matriz, int x, int y, int valor);
+No* consultarPosicao(Matrix *matriz, int x, int y);
+No* buscarValor(Matrix *matriz, int valor);
+void imprimirVizinhos(Matrix *matriz, int x, int y);
 
-#endif /* MATRIZ_H */
+#endif
